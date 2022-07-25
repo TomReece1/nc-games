@@ -5,25 +5,92 @@ import axios from "axios";
 function ReviewDetail() {
   const { review_id } = useParams();
   const [review, setReview] = useState({});
+  const [voteStatus, setVoteStatus] = useState(0);
+  const date = Date(review.created_at);
+  const [err, setErr] = useState(null);
 
-  useEffect(() => {
+  function displayReview() {
     axios
       .get(`https://tr-games-api.herokuapp.com/api/reviews/${review_id}`)
       .then((res) => {
         setReview(res.data.review);
       });
+  }
+
+  useEffect(() => {
+    displayReview();
   }, []);
 
   return (
     <div className="reviewDetail">
       <h3>{review.title}</h3>
-      <h5>
-        By {review.owner} - {Date(review.created_at)}
-      </h5>
+      <h5>By {review.owner}</h5>
       <img src={review.review_img_url} alt={review.title} />
       <p>
         Votes: {review.votes} - Comments: {review.comment_count}
       </p>
+      <p>Your vote: {voteStatus}</p>
+      <button
+        disabled={voteStatus}
+        onClick={(e) => {
+          setVoteStatus(1);
+          const upvotedReview = { ...review };
+          upvotedReview.votes = upvotedReview.votes + 1;
+          setReview(upvotedReview);
+          setErr(null);
+          axios
+            .patch(
+              `https://tr-games-api.herokuapp.com/api/reviews/${review_id}`,
+              { inc_votes: 1 }
+            )
+            .catch((err) => {
+              setReview(review);
+              setErr("Something went wrong, please try again");
+            });
+        }}
+      >
+        Upvote
+      </button>
+      <button
+        disabled={voteStatus}
+        onClick={(e) => {
+          setVoteStatus(-1);
+          const upvotedReview = { ...review };
+          upvotedReview.votes = upvotedReview.votes - 1;
+          setReview(upvotedReview);
+          axios
+            .patch(
+              `https://tr-games-api.herokuapp.com/api/reviews/${review_id}`,
+              { inc_votes: -1 }
+            )
+            .catch((err) => {
+              setReview(review);
+              setErr("Something went wrong, please try again");
+            });
+        }}
+      >
+        Downvote
+      </button>
+      <button
+        disabled={!voteStatus}
+        onClick={(e) => {
+          setVoteStatus(0);
+          const upvotedReview = { ...review };
+          upvotedReview.votes = upvotedReview.votes - voteStatus;
+          setReview(upvotedReview);
+          axios
+            .patch(
+              `https://tr-games-api.herokuapp.com/api/reviews/${review_id}`,
+              { inc_votes: -voteStatus }
+            )
+            .catch((err) => {
+              setReview(review);
+              setErr("Something went wrong, please try again");
+            });
+        }}
+      >
+        Reset
+      </button>
       <p>
         Category: {review.category}
         <br />
