@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function ReviewDetail() {
   const { review_id } = useParams();
@@ -8,6 +9,8 @@ function ReviewDetail() {
   const [voteStatus, setVoteStatus] = useState(0);
   const date = Date(review.created_at);
   const [err, setErr] = useState(null);
+
+  const commentLinkString = `/review/${review_id}/comments`;
 
   function displayReview() {
     axios
@@ -98,6 +101,7 @@ function ReviewDetail() {
         <br />
         {review.review_body}
       </p>
+      <Link to={commentLinkString}>comments</Link>
     </div>
   );
 }

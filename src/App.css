@@ -13,9 +13,14 @@ a{margin: 10px;}
   /* color: white; */
 }
 
-.reviewCard {
+ul {
+  text-align: center;
+}
+
+.reviewCard, .commentCard {
   border-style: solid;
   margin: 20px;
+
 }
 
 li {
@@ -23,8 +28,10 @@ li {
 }
 
 .reviewDetail {
+
   border-style: solid;
-  width: 90%;
+  margin: 10px;
+  padding: 10px;
 }
 
 img {

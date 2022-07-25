@@ -20,7 +20,7 @@ function ReviewList() {
   }, [category]);
 
   return (
-    <main>
+    <main className="reviewList">
       <h2>Reviews</h2>
       <Filter />
       <ul>
