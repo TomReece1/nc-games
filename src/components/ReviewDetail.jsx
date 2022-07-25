@@ -5,25 +5,66 @@ import axios from "axios";
 function ReviewDetail() {
   const { review_id } = useParams();
   const [review, setReview] = useState({});
+  const date = Date(review.created_at);
+  const [err, setErr] = useState(null);
 
-  useEffect(() => {
+  function displayReview() {
     axios
       .get(`https://tr-games-api.herokuapp.com/api/reviews/${review_id}`)
       .then((res) => {
         setReview(res.data.review);
       });
+  }
+
+  useEffect(() => {
+    displayReview();
   }, []);
 
   return (
     <div className="reviewDetail">
       <h3>{review.title}</h3>
-      <h5>
-        By {review.owner} - {Date(review.created_at)}
-      </h5>
+      <h5>By {review.owner}</h5>
       <img src={review.review_img_url} alt={review.title} />
       <p>
         Votes: {review.votes} - Comments: {review.comment_count}
       </p>
+      <button
+        onClick={(e) => {
+          const upvotedReview = { ...review };
+          upvotedReview.votes = upvotedReview.votes + 1;
+          setReview(upvotedReview);
+          setErr(null);
+          axios
+            .patch(
+              `https://tr-games-api.herokuapp.com/api/reviews/${review_id}`,
+              { inc_votes: 1 }
+            )
+            .catch((err) => {
+              setReview(review);
+              setErr("Something went wrong, please try again");
+            });
+        }}
+      >
+        Upvote
+      </button>
+      <button
+        onClick={(e) => {
+          const upvotedReview = { ...review };
+          upvotedReview.votes = upvotedReview.votes - 1;
+          setReview(upvotedReview);
+          axios
+            .patch(
+              `https://tr-games-api.herokuapp.com/api/reviews/${review_id}`,
+              { inc_votes: -1 }
+            )
+            .catch((err) => {
+              setReview(review);
+              setErr("Something went wrong, please try again");
+            });
+        }}
+      >
+        Downvote
+      </button>
       <p>
         Category: {review.category}
         <br />
