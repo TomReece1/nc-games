@@ -3,16 +3,20 @@ import ReviewList from "./components/ReviewList";
 import Filter from "./components/Filter";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
+import ReviewDetail from "./components/ReviewDetail";
+import { Link } from "react-router-dom";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <h1>NC Games</h1>
-        <Filter />
+        <Link to="/">Home</Link>
+
         <Routes>
           <Route path="/" element={<ReviewList />} />
           <Route path="/reviews/:category" element={<ReviewList />} />
+          <Route path="/review/:review_id" element={<ReviewDetail />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -21,3 +21,12 @@ a{margin: 10px;}
 li {
   list-style: none;
 }
+
+.reviewDetail {
+  border-style: solid;
+}
+
+img {
+  height: 200px;
+  border-radius: 10%;
+}
