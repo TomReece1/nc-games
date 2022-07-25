@@ -5,6 +5,7 @@ import axios from "axios";
 function ReviewDetail() {
   const { review_id } = useParams();
   const [review, setReview] = useState({});
+  const [voteStatus, setVoteStatus] = useState(0);
   const date = Date(review.created_at);
   const [err, setErr] = useState(null);
 
@@ -28,8 +29,11 @@ function ReviewDetail() {
       <p>
         Votes: {review.votes} - Comments: {review.comment_count}
       </p>
+      <p>Your vote: {voteStatus}</p>
       <button
+        disabled={voteStatus}
         onClick={(e) => {
+          setVoteStatus(1);
           const upvotedReview = { ...review };
           upvotedReview.votes = upvotedReview.votes + 1;
           setReview(upvotedReview);
@@ -48,7 +52,9 @@ function ReviewDetail() {
         Upvote
       </button>
       <button
+        disabled={voteStatus}
         onClick={(e) => {
+          setVoteStatus(-1);
           const upvotedReview = { ...review };
           upvotedReview.votes = upvotedReview.votes - 1;
           setReview(upvotedReview);
@@ -64,6 +70,26 @@ function ReviewDetail() {
         }}
       >
         Downvote
+      </button>
+      <button
+        disabled={!voteStatus}
+        onClick={(e) => {
+          setVoteStatus(0);
+          const upvotedReview = { ...review };
+          upvotedReview.votes = upvotedReview.votes - voteStatus;
+          setReview(upvotedReview);
+          axios
+            .patch(
+              `https://tr-games-api.herokuapp.com/api/reviews/${review_id}`,
+              { inc_votes: -voteStatus }
+            )
+            .catch((err) => {
+              setReview(review);
+              setErr("Something went wrong, please try again");
+            });
+        }}
+      >
+        Reset
       </button>
       <p>
         Category: {review.category}
