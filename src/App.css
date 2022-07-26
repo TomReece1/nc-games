@@ -11,6 +11,7 @@ a{margin: 10px;}
 
   font-size: calc(10px + 2vmin);
   /* color: white; */
+
 }
 
 ul {
@@ -37,4 +38,9 @@ li {
 img {
   height: 200px;
   border-radius: 10%;
+}
+
+select {
+  height: 50px;
+  font-size: 0.8em;
 }
