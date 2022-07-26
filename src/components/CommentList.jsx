@@ -56,7 +56,11 @@ function CommentList() {
             {comments.map((comment) => {
               return (
                 <li key={comment.comment_id}>
-                  <CommentCard body={comment.body} />
+                  <CommentCard
+                    body={comment.body}
+                    comment_id={comment.comment_id}
+                    displayComments={displayComments}
+                  />
                 </li>
               );
             })}
