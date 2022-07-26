@@ -1,16 +1,8 @@
 function SortBy({ setSortColumn, setSortOrder }) {
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log(e.target);
-  //   setSortInfo();
-  // };
-
   return (
     <div>
       <h2>Sort by</h2>
-      <form
-      // onSubmit={handleSubmit}
-      >
+      <form>
         <label htmlFor="sortBy">Sort by:</label>
         <select
           id="sortBy"

@@ -8,13 +8,8 @@ import SortBy from "./SortBy";
 function ReviewList() {
   const [reviews, setReviews] = useState([]);
   const { category } = useParams();
-  // const [sortInfo, setSortInfo] = useState({ column: "", order: "" });
   const [sortColumn, setSortColumn] = useState("created_at");
   const [sortOrder, setSortOrder] = useState("desc");
-
-  // console.log(sortInfo, "<<sortInfo");
-  console.log(sortColumn, "<<sortColumn");
-  console.log(sortOrder, "<<sortOrder");
 
   useEffect(() => {
     axios
