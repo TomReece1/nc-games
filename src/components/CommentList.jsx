@@ -7,6 +7,7 @@ import CommentCard from "./CommentCard";
 
 function CommentList() {
   const [comments, setComments] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
   const { review_id } = useParams();
 
   useEffect(() => {
@@ -21,16 +22,27 @@ function CommentList() {
 
   return (
     <div className="commentList">
-      <h2>Comments</h2>
-      <ul>
-        {comments.map((comment) => {
-          return (
-            <li key={comment.comment_id}>
-              <CommentCard body={comment.body} />
-            </li>
-          );
-        })}
-      </ul>
+      <button
+        onClick={() => {
+          setIsOpen((currentOpenness) => !currentOpenness);
+        }}
+      >
+        Show comments
+      </button>
+      {isOpen && (
+        <div>
+          <h2>Comments</h2>
+          <ul>
+            {comments.map((comment) => {
+              return (
+                <li key={comment.comment_id}>
+                  <CommentCard body={comment.body} />
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

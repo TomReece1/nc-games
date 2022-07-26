@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import CommentList from "./CommentList";
 
 function ReviewDetail() {
   const { review_id } = useParams();
@@ -101,7 +102,7 @@ function ReviewDetail() {
         <br />
         {review.review_body}
       </p>
-      <Link to={commentLinkString}>comments</Link>
+      <CommentList />
     </div>
   );
 }
