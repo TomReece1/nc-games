@@ -8,9 +8,10 @@ import CommentCard from "./CommentCard";
 function CommentList() {
   const [comments, setComments] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [commentToAdd, setCommentToAdd] = useState("");
   const { review_id } = useParams();
 
-  useEffect(() => {
+  const displayComments = () => {
     axios
       .get(
         `https://tr-games-api.herokuapp.com/api/reviews/${review_id}/comments`
@@ -18,7 +19,26 @@ function CommentList() {
       .then((res) => {
         setComments(res.data.comments);
       });
-  }, [review_id]);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        `https://tr-games-api.herokuapp.com/api/reviews/${review_id}/comments`,
+        {
+          username: "jessjelly",
+          body: commentToAdd,
+        }
+      )
+      .then(() => {
+        setCommentToAdd("");
+      });
+  };
+
+  useEffect(() => {
+    displayComments();
+  }, [review_id, commentToAdd]);
 
   return (
     <div className="commentList">
@@ -41,6 +61,19 @@ function CommentList() {
               );
             })}
           </ul>
+
+          <form onSubmit={handleSubmit}>
+            <h3>Add a comment</h3>
+
+            <label>Text:</label>
+            <textarea
+              value={commentToAdd}
+              onChange={(e) => {
+                setCommentToAdd(e.target.value);
+              }}
+            />
+            <button type="submit">Submit</button>
+          </form>
         </div>
       )}
     </div>
