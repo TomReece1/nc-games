@@ -6,20 +6,34 @@ import Home from "./components/Home";
 import ReviewDetail from "./components/ReviewDetail";
 import { Link } from "react-router-dom";
 import CommentList from "./components/CommentList";
+import { UserContext } from "./contexts/User";
+import { useContext, useState } from "react";
+import Header from "./components/Header";
+import Navigation from "./components/Navigation";
+import ChangeUser from "./components/ChangeUser";
 
 function App() {
+  const [user, setUser] = useState({
+    username: "",
+    name: "",
+    avatar_url: "",
+  });
+
   return (
     <BrowserRouter>
-      <div className="App">
-        <h1>NC Games</h1>
-        <Link to="/">Home</Link>
+      <UserContext.Provider value={{ user, setUser }}>
+        <div className="App">
+          <Header />
+          <Navigation />
 
-        <Routes>
-          <Route path="/" element={<ReviewList />} />
-          <Route path="/reviews/:category" element={<ReviewList />} />
-          <Route path="/review/:review_id" element={<ReviewDetail />} />
-        </Routes>
-      </div>
+          <Routes>
+            <Route path="/" element={<ReviewList />} />
+            <Route path="/reviews/:category" element={<ReviewList />} />
+            <Route path="/review/:review_id" element={<ReviewDetail />} />
+            <Route path="/change_user" element={<ChangeUser />} />
+          </Routes>
+        </div>
+      </UserContext.Provider>
     </BrowserRouter>
   );
 }

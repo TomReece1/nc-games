@@ -4,12 +4,16 @@ import ReviewCard from "./ReviewCard";
 import { useParams } from "react-router-dom";
 import Filter from "./Filter";
 import CommentCard from "./CommentCard";
+import { UserContext } from "../contexts/User";
+import { useContext } from "react";
 
 function CommentList() {
   const [comments, setComments] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [commentToAdd, setCommentToAdd] = useState("");
   const { review_id } = useParams();
+  const [commentDeleted, setCommentDeleted] = useState(false);
+  const { user } = useContext(UserContext);
 
   const displayComments = () => {
     axios
@@ -27,7 +31,7 @@ function CommentList() {
       .post(
         `https://tr-games-api.herokuapp.com/api/reviews/${review_id}/comments`,
         {
-          username: "jessjelly",
+          username: user.username,
           body: commentToAdd,
         }
       )
@@ -52,14 +56,17 @@ function CommentList() {
       {isOpen && (
         <div>
           <h2>Comments</h2>
+          {commentDeleted && <p>Comment was delted</p>}
           <ul>
             {comments.map((comment) => {
               return (
                 <li key={comment.comment_id}>
                   <CommentCard
+                    author={comment.author}
                     body={comment.body}
                     comment_id={comment.comment_id}
                     displayComments={displayComments}
+                    setCommentDeleted={setCommentDeleted}
                   />
                 </li>
               );
@@ -76,7 +83,9 @@ function CommentList() {
                 setCommentToAdd(e.target.value);
               }}
             />
-            <button type="submit">Submit</button>
+            <button disabled={!user.username} type="submit">
+              Submit
+            </button>
           </form>
         </div>
       )}
