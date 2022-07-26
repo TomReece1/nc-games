@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import ReviewDetail from "./components/ReviewDetail";
 import { Link } from "react-router-dom";
+import CommentList from "./components/CommentList";
 
 function App() {
   return (
@@ -17,6 +18,15 @@ function App() {
           <Route path="/" element={<ReviewList />} />
           <Route path="/reviews/:category" element={<ReviewList />} />
           <Route path="/review/:review_id" element={<ReviewDetail />} />
+          <Route
+            path="/review/:review_id/comments"
+            element={
+              <div>
+                <ReviewDetail />
+                <CommentList />
+              </div>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>
