@@ -18,15 +18,6 @@ function App() {
           <Route path="/" element={<ReviewList />} />
           <Route path="/reviews/:category" element={<ReviewList />} />
           <Route path="/review/:review_id" element={<ReviewDetail />} />
-          <Route
-            path="/review/:review_id/comments"
-            element={
-              <div>
-                <ReviewDetail />
-                <CommentList />
-              </div>
-            }
-          />
         </Routes>
       </div>
     </BrowserRouter>
