@@ -12,6 +12,22 @@ function ReviewDetail() {
 
   const commentLinkString = `/review/${review_id}/comments`;
 
+  function handleVoteButtonClick(vote) {
+    setVoteStatus(vote);
+    const upvotedReview = { ...review };
+    upvotedReview.votes = upvotedReview.votes + vote;
+    setReview(upvotedReview);
+    setErr(null);
+    axios
+      .patch(`https://tr-games-api.herokuapp.com/api/reviews/${review_id}`, {
+        inc_votes: vote,
+      })
+      .catch((err) => {
+        setReview(review);
+        setErr("Something went wrong, please try again");
+      });
+  }
+
   function displayReview() {
     axios
       .get(`https://tr-games-api.herokuapp.com/api/reviews/${review_id}`)
@@ -43,20 +59,7 @@ function ReviewDetail() {
           <button
             disabled={voteStatus}
             onClick={(e) => {
-              setVoteStatus(1);
-              const upvotedReview = { ...review };
-              upvotedReview.votes = upvotedReview.votes + 1;
-              setReview(upvotedReview);
-              setErr(null);
-              axios
-                .patch(
-                  `https://tr-games-api.herokuapp.com/api/reviews/${review_id}`,
-                  { inc_votes: 1 }
-                )
-                .catch((err) => {
-                  setReview(review);
-                  setErr("Something went wrong, please try again");
-                });
+              handleVoteButtonClick(1);
             }}
           >
             Upvote
@@ -64,19 +67,7 @@ function ReviewDetail() {
           <button
             disabled={voteStatus}
             onClick={(e) => {
-              setVoteStatus(-1);
-              const upvotedReview = { ...review };
-              upvotedReview.votes = upvotedReview.votes - 1;
-              setReview(upvotedReview);
-              axios
-                .patch(
-                  `https://tr-games-api.herokuapp.com/api/reviews/${review_id}`,
-                  { inc_votes: -1 }
-                )
-                .catch((err) => {
-                  setReview(review);
-                  setErr("Something went wrong, please try again");
-                });
+              handleVoteButtonClick(-1);
             }}
           >
             Downvote
