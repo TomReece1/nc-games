@@ -26,7 +26,7 @@ function ReviewList() {
         setReviews(res.data.reviews);
       })
       .catch((err) => {
-        setErr("404 category not found");
+        setErr("Something went wrong");
       });
 
     axios
