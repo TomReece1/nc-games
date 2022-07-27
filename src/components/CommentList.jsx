@@ -6,6 +6,7 @@ import Filter from "./Filter";
 import CommentCard from "./CommentCard";
 import { UserContext } from "../contexts/User";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 function CommentList() {
   const [comments, setComments] = useState([]);
@@ -73,20 +74,26 @@ function CommentList() {
             })}
           </ul>
 
-          <form onSubmit={handleSubmit}>
-            <h3>Add a comment</h3>
+          {(user.username && (
+            <form onSubmit={handleSubmit}>
+              <h3>Add a comment</h3>
 
-            <label>Text:</label>
-            <textarea
-              value={commentToAdd}
-              onChange={(e) => {
-                setCommentToAdd(e.target.value);
-              }}
-            />
-            <button disabled={!user.username || !commentToAdd} type="submit">
-              Submit
-            </button>
-          </form>
+              <label>Text:</label>
+              <textarea
+                value={commentToAdd}
+                onChange={(e) => {
+                  setCommentToAdd(e.target.value);
+                }}
+              />
+              <button disabled={!user.username || !commentToAdd} type="submit">
+                Submit
+              </button>
+            </form>
+          )) || (
+            <Link to="/change_user">
+              <p>Log in to add comments</p>
+            </Link>
+          )}
         </div>
       )}
     </div>
