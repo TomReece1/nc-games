@@ -42,7 +42,6 @@ function ReviewList() {
 
   return (
     <div>
-      {console.log(categories)}
       {[...categories, undefined].includes(category) === false ? (
         <p>{err}</p>
       ) : (
