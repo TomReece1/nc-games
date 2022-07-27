@@ -10,6 +10,8 @@ function ReviewList() {
   const { category } = useParams();
   const [sortColumn, setSortColumn] = useState("created_at");
   const [sortOrder, setSortOrder] = useState("desc");
+  const [categories, setCategories] = useState([]);
+  const [err, setErr] = useState(null);
 
   useEffect(() => {
     axios
@@ -22,29 +24,49 @@ function ReviewList() {
       })
       .then((res) => {
         setReviews(res.data.reviews);
+      })
+      .catch((err) => {
+        setErr("404 category not found");
+      });
+
+    axios
+      .get(`https://tr-games-api.herokuapp.com/api/categories`)
+      .then((res) => {
+        setCategories(
+          res.data.categories.map((category) => {
+            return category.slug;
+          })
+        );
       });
   }, [category, sortColumn, sortOrder]);
 
   return (
-    <main className="reviewList">
-      <h2>Reviews</h2>
-      <Filter />
-      <SortBy setSortColumn={setSortColumn} setSortOrder={setSortOrder} />
-      <ul>
-        {reviews.map((review) => {
-          return (
-            <li key={review.review_id}>
-              <ReviewCard
-                review_id={review.review_id}
-                title={review.title}
-                category={review.category}
-                votes={review.votes}
-              />
-            </li>
-          );
-        })}
-      </ul>
-    </main>
+    <div>
+      {console.log(categories)}
+      {[...categories, undefined].includes(category) === false ? (
+        <p>{err}</p>
+      ) : (
+        <main className="reviewList">
+          <h2>Reviews</h2>
+          <Filter />
+          <SortBy setSortColumn={setSortColumn} setSortOrder={setSortOrder} />
+          <ul>
+            {reviews.map((review) => {
+              return (
+                <li key={review.review_id}>
+                  <ReviewCard
+                    review_id={review.review_id}
+                    title={review.title}
+                    category={review.category}
+                    votes={review.votes}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </main>
+      )}
+    </div>
   );
 }
 

@@ -83,7 +83,7 @@ function CommentList() {
                 setCommentToAdd(e.target.value);
               }}
             />
-            <button disabled={!user.username} type="submit">
+            <button disabled={!user.username || !commentToAdd} type="submit">
               Submit
             </button>
           </form>
