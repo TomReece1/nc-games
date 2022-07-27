@@ -23,24 +23,27 @@ function CommentCard({
           <p>
             {author}: {body}
           </p>
-          <button
-            disabled={!loggedIn || !user.username}
-            onClick={() => {
-              setCommentDeleted(true);
-              axios
-                .delete(
-                  `https://tr-games-api.herokuapp.com/api/comments/${comment_id}`
-                )
-                .then(() => {
-                  displayComments();
-                })
-                .catch((err) => {
-                  setErr("Could not delete comment, sorry");
-                });
-            }}
-          >
-            delete
-          </button>
+
+          {loggedIn && (
+            <button
+              disabled={!loggedIn || !user.username}
+              onClick={() => {
+                setCommentDeleted(true);
+                axios
+                  .delete(
+                    `https://tr-games-api.herokuapp.com/api/comments/${comment_id}`
+                  )
+                  .then(() => {
+                    displayComments();
+                  })
+                  .catch((err) => {
+                    setErr("Could not delete comment, sorry");
+                  });
+              }}
+            >
+              delete
+            </button>
+          )}
         </div>
       )}
     </div>
