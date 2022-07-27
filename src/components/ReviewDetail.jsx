@@ -56,6 +56,9 @@ function ReviewDetail() {
             Votes: {review.votes} - Comments: {review.comment_count}
           </p>
           <p>Your vote: {voteStatus}</p>
+
+          {(voteStatus && <p>Reset to change vote</p>) || <p>Vote:</p>}
+
           <button
             disabled={voteStatus}
             onClick={(e) => {
