@@ -56,7 +56,7 @@ function CommentList() {
       {isOpen && (
         <div>
           <h2>Comments</h2>
-          {commentDeleted && <p>Comment was delted</p>}
+          {commentDeleted && <p>Comment was deleted</p>}
           <ul>
             {comments.map((comment) => {
               return (
