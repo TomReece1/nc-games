@@ -85,9 +85,14 @@ function CommentList() {
                   setCommentToAdd(e.target.value);
                 }}
               />
-              <button disabled={!user.username || !commentToAdd} type="submit">
-                Submit
-              </button>
+
+              {commentToAdd ? (
+                <button type="submit">Submit</button>
+              ) : (
+                <button disabled={true} type="submit">
+                  Enter text first
+                </button>
+              )}
             </form>
           )) || (
             <Link to="/change_user">
