@@ -15,6 +15,7 @@ function CommentList() {
   const { review_id } = useParams();
   const [commentDeleted, setCommentDeleted] = useState(false);
   const { user } = useContext(UserContext);
+  const [err, setErr] = useState(null);
 
   const displayComments = () => {
     axios
@@ -23,6 +24,9 @@ function CommentList() {
       )
       .then((res) => {
         setComments(res.data.comments);
+      })
+      .catch((err) => {
+        setErr("Something went wrong");
       });
   };
 
@@ -38,6 +42,9 @@ function CommentList() {
       )
       .then(() => {
         setCommentToAdd("");
+      })
+      .catch((err) => {
+        setErr("Something went wrong");
       });
   };
 
@@ -46,58 +53,64 @@ function CommentList() {
   }, [review_id, commentToAdd]);
 
   return (
-    <div className="commentList">
-      <button
-        onClick={() => {
-          setIsOpen((currentOpenness) => !currentOpenness);
-        }}
-      >
-        Show comments
-      </button>
-      {isOpen && (
-        <div>
-          <h2>Comments</h2>
-          {commentDeleted && <p>Comment was deleted</p>}
-          <ul>
-            {comments.map((comment) => {
-              return (
-                <li key={comment.comment_id}>
-                  <CommentCard
-                    author={comment.author}
-                    body={comment.body}
-                    comment_id={comment.comment_id}
-                    displayComments={displayComments}
-                    setCommentDeleted={setCommentDeleted}
+    <div>
+      {err ? (
+        <p>{err}</p>
+      ) : (
+        <div className="commentList">
+          <button
+            onClick={() => {
+              setIsOpen((currentOpenness) => !currentOpenness);
+            }}
+          >
+            Show comments
+          </button>
+          {isOpen && (
+            <div>
+              <h2>Comments</h2>
+              {commentDeleted && <p>Comment was deleted</p>}
+              <ul>
+                {comments.map((comment) => {
+                  return (
+                    <li key={comment.comment_id}>
+                      <CommentCard
+                        author={comment.author}
+                        body={comment.body}
+                        comment_id={comment.comment_id}
+                        displayComments={displayComments}
+                        setCommentDeleted={setCommentDeleted}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+
+              {(user.username && (
+                <form onSubmit={handleSubmit}>
+                  <h3>Add a comment</h3>
+
+                  <label>Text:</label>
+                  <textarea
+                    value={commentToAdd}
+                    onChange={(e) => {
+                      setCommentToAdd(e.target.value);
+                    }}
                   />
-                </li>
-              );
-            })}
-          </ul>
 
-          {(user.username && (
-            <form onSubmit={handleSubmit}>
-              <h3>Add a comment</h3>
-
-              <label>Text:</label>
-              <textarea
-                value={commentToAdd}
-                onChange={(e) => {
-                  setCommentToAdd(e.target.value);
-                }}
-              />
-
-              {commentToAdd ? (
-                <button type="submit">Submit</button>
-              ) : (
-                <button disabled={true} type="submit">
-                  Enter text first
-                </button>
+                  {commentToAdd ? (
+                    <button type="submit">Submit</button>
+                  ) : (
+                    <button disabled={true} type="submit">
+                      Enter text first
+                    </button>
+                  )}
+                </form>
+              )) || (
+                <Link to="/change_user">
+                  <p>Log in to add comments</p>
+                </Link>
               )}
-            </form>
-          )) || (
-            <Link to="/change_user">
-              <p>Log in to add comments</p>
-            </Link>
+            </div>
           )}
         </div>
       )}

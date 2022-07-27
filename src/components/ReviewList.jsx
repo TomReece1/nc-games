@@ -29,16 +29,6 @@ function ReviewList() {
         setErr("Something went wrong");
       });
 
-    // axios
-    //   .get(`https://tr-games-api.herokuapp.com/api/categories`)
-    //   .then((res) => {
-    //     setCategories(
-    //       res.data.categories.map((category) => {
-    //         return category.slug;
-    //       })
-    //     );
-    //   });
-
     axios
       .get(`https://tr-games-api.herokuapp.com/api/categories`)
       .then((res) => {
@@ -52,6 +42,9 @@ function ReviewList() {
         ) {
           setErr("Something went wrong");
         }
+      })
+      .catch((err) => {
+        setErr("Something went wrong");
       });
   }, [category, sortColumn, sortOrder]);
 

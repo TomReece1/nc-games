@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import CommentList from "./CommentList";
+import { UserContext } from "../contexts/User";
 
 function ReviewDetail() {
   const { review_id } = useParams();
@@ -11,6 +12,8 @@ function ReviewDetail() {
   const [err, setErr] = useState(null);
 
   const commentLinkString = `/review/${review_id}/comments`;
+
+  const { user } = useContext(UserContext);
 
   function handleVoteButtonClick(vote) {
     setVoteStatus(vote);
@@ -57,10 +60,15 @@ function ReviewDetail() {
           </p>
           <p>Your vote: {voteStatus}</p>
 
-          {(voteStatus && <p>Reset to change vote</p>) || <p>Vote:</p>}
+          {(!user.username && (
+            <Link to="/change_user">
+              <p>Log in to vote</p>
+            </Link>
+          )) || <p></p>}
+          {(voteStatus && <p>Reset to change vote</p>) || <p></p>}
 
           <button
-            disabled={voteStatus}
+            disabled={voteStatus || !user.username}
             onClick={(e) => {
               handleVoteButtonClick(1);
             }}
@@ -68,7 +76,7 @@ function ReviewDetail() {
             Upvote
           </button>
           <button
-            disabled={voteStatus}
+            disabled={voteStatus || !user.username}
             onClick={(e) => {
               handleVoteButtonClick(-1);
             }}
