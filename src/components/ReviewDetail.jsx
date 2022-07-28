@@ -47,7 +47,7 @@ function ReviewDetail() {
   }, []);
 
   return (
-    <div>
+    <main>
       {err ? (
         <p>{err}</p>
       ) : (
@@ -113,7 +113,7 @@ function ReviewDetail() {
           <CommentList />
         </div>
       )}
-    </div>
+    </main>
   );
 }
 export default ReviewDetail;

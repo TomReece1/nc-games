@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 function Filter() {
   return (
     <div>
-      <h2>Filter by Category:</h2>
       <nav>
         <Link to="/">All</Link>
         <Link to="/reviews/dexterity">Dexterity</Link>

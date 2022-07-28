@@ -1,7 +1,6 @@
 function SortBy({ setSortColumn, setSortOrder }) {
   return (
     <div>
-      <h2>Sort by</h2>
       <form>
         <label htmlFor="sortBy">Sort by:</label>
         <select

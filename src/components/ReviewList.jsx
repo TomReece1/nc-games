@@ -49,14 +49,16 @@ function ReviewList() {
   }, [category, sortColumn, sortOrder]);
 
   return (
-    <div>
+    <main className="reviewList">
       {err ? (
         <p>{err}</p>
       ) : (
-        <main className="reviewList">
-          <h2>Reviews</h2>
-          <Filter />
-          <SortBy setSortColumn={setSortColumn} setSortOrder={setSortOrder} />
+        <div>
+          <div className="filters">
+            <h3>Reviews</h3>
+            <Filter />
+            <SortBy setSortColumn={setSortColumn} setSortOrder={setSortOrder} />
+          </div>
           <ul>
             {reviews.map((review) => {
               return (
@@ -71,9 +73,9 @@ function ReviewList() {
               );
             })}
           </ul>
-        </main>
+        </div>
       )}
-    </div>
+    </main>
   );
 }
 

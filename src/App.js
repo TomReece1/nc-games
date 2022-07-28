@@ -8,6 +8,8 @@ import Header from "./components/Header";
 import Navigation from "./components/Navigation";
 import ChangeUser from "./components/ChangeUser";
 
+import { useState } from "react";
+
 import { UserContext } from "./contexts/User";
 
 function App() {
@@ -22,7 +24,7 @@ function App() {
       <UserContext.Provider value={{ user, setUser }}>
         <div className="App">
           <Header />
-          <Navigation />
+          <Navigation className="navBar" />
 
           <Routes>
             <Route path="/" element={<ReviewList />} />
