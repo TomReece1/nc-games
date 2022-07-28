@@ -10,10 +10,10 @@ function ReviewList() {
   const { category } = useParams();
   const [sortColumn, setSortColumn] = useState("created_at");
   const [sortOrder, setSortOrder] = useState("desc");
-  const [categories, setCategories] = useState([]);
   const [err, setErr] = useState(null);
 
   useEffect(() => {
+    console.log("you just clicked a category");
     axios
       .get(`https://tr-games-api.herokuapp.com/api/reviews`, {
         params: {
@@ -47,6 +47,22 @@ function ReviewList() {
         setErr("Something went wrong");
       });
   }, [category, sortColumn, sortOrder]);
+
+  function checkBoxes() {
+    const boxes = document.querySelectorAll(".reviewCard");
+
+    const triggerBottom = window.innerHeight * 0.8;
+    boxes.forEach((box) => {
+      const boxTop = box.getBoundingClientRect().top;
+      if (boxTop < triggerBottom) {
+        box.classList.add("show");
+      } else {
+        box.classList.remove("show");
+      }
+    });
+  }
+
+  window.addEventListener("scroll", checkBoxes);
 
   return (
     <main className="reviewList">

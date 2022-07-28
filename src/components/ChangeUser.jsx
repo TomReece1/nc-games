@@ -16,6 +16,22 @@ function ChangeUser() {
     });
   }, []);
 
+  function checkBoxes() {
+    const boxes = document.querySelectorAll(".userCard");
+
+    const triggerBottom = window.innerHeight * 0.8;
+    boxes.forEach((box) => {
+      const boxTop = box.getBoundingClientRect().top;
+      if (boxTop < triggerBottom) {
+        box.classList.add("show");
+      } else {
+        box.classList.remove("show");
+      }
+    });
+  }
+
+  window.addEventListener("scroll", checkBoxes);
+
   return (
     <main>
       <h3>Choose a user:</h3>
@@ -25,7 +41,7 @@ function ChangeUser() {
         <ul>
           {users.map((profile, index) => {
             return (
-              <li className="userCard" key={index}>
+              <li className="userCard show" key={index}>
                 <h4>{profile.username}</h4>
                 <img src={profile.avatar_url} alt={profile.username} />
                 <p>{profile.kudos}</p>
