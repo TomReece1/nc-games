@@ -19,7 +19,7 @@ function CommentCard({
       {err ? (
         <p>{err}</p>
       ) : (
-        <div className="commentCard">
+        <div className="commentCard show">
           <p>
             {author}: {body}
           </p>

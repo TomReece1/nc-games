@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 
 function ReviewCard({ review_id, title, category, votes }) {
   const linkString = `/review/${review_id}`;
+
   return (
-    <div className="reviewCard">
+    <div className="reviewCard show">
       <Link to={linkString}>
         <h3>{title}</h3>
       </Link>
