@@ -1,16 +1,14 @@
 import "./App.css";
-import ReviewList from "./components/ReviewList";
-import Filter from "./components/Filter";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./components/Home";
+
+import ReviewList from "./components/ReviewList";
 import ReviewDetail from "./components/ReviewDetail";
-import { Link } from "react-router-dom";
-import CommentList from "./components/CommentList";
-import { UserContext } from "./contexts/User";
-import { useContext, useState } from "react";
 import Header from "./components/Header";
 import Navigation from "./components/Navigation";
 import ChangeUser from "./components/ChangeUser";
+
+import { UserContext } from "./contexts/User";
 
 function App() {
   const [user, setUser] = useState({
