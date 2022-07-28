@@ -1,9 +1,6 @@
-
-a{margin: 10px;}
-
 .App {
   text-align: center;
-  /* background-color: #282c34; */
+  background-color: #bdffbb;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -13,6 +10,9 @@ a{margin: 10px;}
   /* color: white; */
 
 }
+
+a{margin: 10px;}
+
 
 ul {
   text-align: center;
