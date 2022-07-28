@@ -2,6 +2,7 @@ import { UserContext } from "../contexts/User";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 
+
 function Header() {
   const { user, setUser } = useContext(UserContext);
 

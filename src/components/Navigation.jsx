@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-function Navigation() {
+function Navigation({ className }) {
   return (
-    <nav>
+    <nav className={className}>
       <Link to="/">Home</Link>
       <Link to="/change_user">Change User</Link>
     </nav>

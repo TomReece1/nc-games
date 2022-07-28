@@ -17,16 +17,16 @@ function ChangeUser() {
   }, []);
 
   return (
-    <section>
-      <h2>Choose a user:</h2>
+    <main>
+      <h3>Choose a user:</h3>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
         <ul>
           {users.map((profile, index) => {
             return (
-              <li key={index}>
-                <h3>{profile.username}</h3>
+              <li className="userCard" key={index}>
+                <h4>{profile.username}</h4>
                 <img src={profile.avatar_url} alt={profile.username} />
                 <p>{profile.kudos}</p>
                 <Link to="/">
@@ -43,7 +43,7 @@ function ChangeUser() {
           })}
         </ul>
       )}
-    </section>
+    </main>
   );
 }
 
