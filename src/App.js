@@ -25,14 +25,15 @@ function App() {
         <div className="App">
           <Header />
           <Navigation className="navBar" />
-
-          <Routes>
-            <Route path="/" element={<ReviewList />} />
-            <Route path="/reviews/:category" element={<ReviewList />} />
-            <Route path="/review/:review_id" element={<ReviewDetail />} />
-            <Route path="/change_user" element={<ChangeUser />} />
-            <Route path="/*" element={<p>404 page not found</p>} />
-          </Routes>
+          <main className="content">
+            <Routes>
+              <Route path="/" element={<ReviewList />} />
+              <Route path="/reviews/:category" element={<ReviewList />} />
+              <Route path="/review/:review_id" element={<ReviewDetail />} />
+              <Route path="/change_user" element={<ChangeUser />} />
+              <Route path="/*" element={<p>404 page not found</p>} />
+            </Routes>
+          </main>
         </div>
       </UserContext.Provider>
     </BrowserRouter>
